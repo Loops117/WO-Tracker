@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WO Tracker</title>
+  <style>
+    body { font-family: sans-serif; padding: 2em; }
+    .names button { margin: 0.5em; padding: 0.5em 1em; }
+    #log { margin-top: 2em; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>Work Order Time Tracker</h2>
+
+  <div class="names">
+    <p>Select Your Name:</p>
+    <button onclick="setName('John')">John</button>
+    <button onclick="setName('Sarah')">Sarah</button>
+    <button onclick="setName('Mike')">Mike</button>
+    <!-- Add more names here -->
+  </div>
+
+  <div id="selectedName" style="margin: 1em 0; font-weight: bold;"></div>
+
+  <div>
+    <input id="woInput" type="text" placeholder="Enter Work Order Code (e.g. WO-123)" />
+    <button onclick="submitWO()">Submit</button>
+  </div>
+
+  <div id="log"></div>
+
+  <script>
+    let selectedName = "";
+    let workOrderStatus = {}; // local memory only
+
+    function setName(name) {
+      selectedName = name;
+      document.getElementById("selectedName").innerText = "Selected: " + name;
+    }
+
+    function submitWO() {
+      const input = document.getElementById("woInput").value.trim().toUpperCase();
+      const logDiv = document.getElementById("log");
+
+      if (!selectedName) {
+        logDiv.innerText = "Please select a name first.";
+        return;
+      }
+
+      if (!input.startsWith("WO-")) {
+        logDiv.innerText = "Invalid input. Must start with WO-";
+        return;
+      }
+
+      const key = `${selectedName}-${input}`;
+      const status = workOrderStatus[key] === "Started" ? "Finished" : "Started";
+      workOrderStatus[key] = status;
+
+      fetch("https://script.google.com/macros/s/AKfycbyt_fF9TQ6z6uPLV82uZs5M1hyb8YqrMEP1eJOqMtAOeODs3rV18bWs_MWzh6J0zvjM/exec", {
+        method: "POST",
+        body: JSON.stringify({
+          name: selectedName,
+          wo: input,
+          status: status
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        logDiv.innerText = `${status} ${input} – ${data.description} – ${selectedName} at ${new Date(data.timestamp).toLocaleString()}`;
+      })
+      .catch(err => {
+        console.error("Error sending to Google Sheets", err);
+        logDiv.innerText = "Failed to log data. See console.";
+      });
+    }
+  </script>
+</body>
+</html>
