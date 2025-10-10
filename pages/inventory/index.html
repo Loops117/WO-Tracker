@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inventory</title>
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+<div data-partial="header"></div>
+<div class="app-shell">
+  <aside id="side-menu" class="side-menu"></aside>
+  <main class="app-main">
+    <section class="card">
+      <div class="toolbar">
+        <h1 class="page-title">Inventory</h1>
+        <div class="tool-actions">
+          <input id="inv-search" class="input" placeholder="Search SKU or description…"/>
+          <select id="filter-type" class="input">
+            <option value="">All Types</option>
+          </select>
+          <select id="filter-active" class="input">
+            <option value="">All</option>
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
+          </select>
+          <button id="add-item-btn" class="btn-cta">+ New Item</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="table" id="inv-table">
+          <thead>
+            <tr><th>SKU</th><th>Description</th><th>Location</th><th>Buy</th></tr>
+          </thead>
+          <tbody id="inv-tbody"><tr><td colspan="4" class="muted">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<aside id="drawer" class="drawer" aria-hidden="true">
+  <div class="drawer-header">
+    <div>
+      <div class="drawer-title" id="drawer-title">—</div>
+      <div class="drawer-subtitle muted" id="drawer-sub">—</div>
+    </div>
+    <button id="drawer-close" class="btn small">Close</button>
+  </div>
+  <div class="drawer-body" id="drawer-body"></div>
+</aside>
+
+<div id="modal-backdrop" class="modal-backdrop" hidden></div>
+<div id="modal" class="modal" hidden>
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3>Add New Item</h3>
+      <button id="modal-x" class="btn small">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="grid-2">
+        <label>SKU <input id="new-sku" class="input" placeholder="e.g., LB-100A"></label>
+        <label>Type <input id="new-type" class="input" placeholder="Hardware"></label>
+        <label>Description <input id="new-desc" class="input" placeholder="Short description"></label>
+        <label>Active <select id="new-active" class="input"><option value="true" selected>True</option><option value="false">False</option></select></label>
+        <label>U/M <input id="new-um" class="input" placeholder="EA"></label>
+        <label>Cost <input id="new-cost" class="input" placeholder="0.00"></label>
+        <label>Price <input id="new-price" class="input" placeholder="0.00"></label>
+        <label>Reorder Point <input id="new-rp" class="input" placeholder="0"></label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button id="modal-cancel" class="btn">Cancel</button>
+      <button id="modal-save" class="btn-cta">Save Item</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Add Location Modal -->
+<div id="modal-loc" class="modal" hidden>
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3>Add Location for <span id="loc-sku-label">—</span></h3>
+      <button id="modal-loc-x" class="btn small">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="grid-2">
+        <label>Location <input id="loc-location" class="input" placeholder="Aisle-Row"></label>
+        <label>Shelf <input id="loc-shelf" class="input" placeholder="Top/Bottom"></label>
+        <label>Order Position <input id="loc-order" class="input" type="number" placeholder="0"></label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button id="modal-loc-cancel" class="btn">Cancel</button>
+      <button id="modal-loc-save" class="btn-cta">Save Location</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Purchasing Modal -->
+<div id="modal-buy" class="modal" hidden>
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3>Add Purchasing for <span id="buy-sku-label">—</span></h3>
+      <button id="modal-buy-x" class="btn small">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="grid-2">
+        <label>Vendor Name <input id="buy-vendor" class="input" placeholder="Acme Co."></label>
+        <label>Item URL <input id="buy-url" class="input" placeholder="https://..."></label>
+        <label>Default Vendor?
+          <select id="buy-default" class="input">
+            <option value="true">Yes</option>
+            <option value="false" selected>No</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button id="modal-buy-cancel" class="btn">Cancel</button>
+      <button id="modal-buy-save" class="btn-cta">Save Purchasing</button>
+    </div>
+  </div>
+</div>
+
+<div data-partial="footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module" src="../../assets/js/app.config.js"></script>
+<script type="module" src="../../assets/js/supa.js"></script>
+<script type="module" src="../../assets/js/layout.js"></script>
+<script type="module" src="../../assets/js/menu.js"></script>
+<script type="module" src="../../assets/js/inventory.page.js"></script>
+</body>
+</html>

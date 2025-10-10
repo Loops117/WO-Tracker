@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin — Users</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Admin — Users</h1>
+
+    <section class="card" id="auth">
+      <h2>Sign in (Admin)</h2>
+      <div class="row">
+        <input id="email" type="email" placeholder="Admin email">
+        <input id="password" type="password" placeholder="Password">
+        <button id="login">Sign in</button>
+        <button id="logout" style="display:none">Sign out</button>
+      </div>
+      <div id="auth-msg" class="msg"></div>
+    </section>
+
+    <section class="card">
+      <h2>Workers</h2>
+      <div id="users"></div>
+      <div id="msg" class="msg"></div>
+    </section>
+  </main>
+
+  <!-- Supabase JS v2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- App scripts (config & modules) -->
+  <script type="module" src="../assets/js/app.config.js"></script>
+  <script type="module" src="../assets/js/admin.users.js"></script>
+</body>
+</html>

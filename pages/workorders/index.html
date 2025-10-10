@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin</title>
+  <!-- match Inventory’s stylesheet path -->
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+
+<!-- same header partial used by Inventory -->
+<div data-partial="header"></div>
+
+<!-- SAME APP SHELL STRUCTURE -->
+<div class="app-shell">
+  <aside id="side-menu" class="side-menu"></aside>
+
+  <main class="app-main">
+    <section class="card">
+      <div class="toolbar">
+        <h1 class="page-title">Admin</h1>
+        <div class="tool-actions"></div>
+      </div>
+
+      <!-- page-level sub menu (Tree / Work Orders / Users) -->
+      <div id="admin-subnav" class="subnav" style="display:none;"></div>
+
+      <!-- dynamic content mounts here -->
+      <div id="admin-view" class="content"></div>
+    </section>
+  </main>
+</div>
+
+<!-- same footer partial used by Inventory -->
+<div data-partial="footer"></div>
+
+<!-- same script stack & order as Inventory -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module" src="../../assets/js/app.config.js"></script>
+<script type="module" src="../../assets/js/supa.js"></script>
+<script type="module" src="../../assets/js/layout.js"></script>
+<script type="module" src="../../assets/js/menu.js"></script>
+<script type="module" src="../../assets/js/admin.page.js"></script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<section class="card" style="margin:12px; padding:12px;">
+  <h3 style="margin:0 0 8px;">Work Orders Admin</h3>
+
+  <div class="toolbar" style="display:flex;gap:.5rem;align-items:center;margin-bottom:.5rem;">
+    <button class="btn" id="wo-new">+ New Template</button>
+    <input class="input" id="wo-search" placeholder="Search templates..." />
+  </div>
+
+  <div id="wo-list" class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Qty</th>
+          <th>Std Time Each</th>
+          <th>Total Std Time</th>
+          <th>Procedures Needed</th>
+          <th style="width:200px">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="wo-tbody"><tr><td colspan="6" class="muted">Loading…</td></tr></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Modal styles (scoped) -->
+<style>
+  .wo-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .wo-section {
+    border: 1px solid var(--border, #dde1e6);
+    border-radius: 10px;
+    padding: 12px;
+    background: var(--card, #fff);
+  }
+  .wo-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .wo-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+  .wo-time-row{
+    display:flex;
+    align-items:center;
+    gap:.25rem
+  }
+  .wo-time-row input{ width:5.2rem }
+  .wo-time-sep{ opacity:.6 }
+
+  /* Steps one-column and scrollable */
+  .wo-steps {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    max-height: 40vh;        /* scroll when tall */
+    overflow: auto;
+    padding-right: 4px;
+  }
+  .wo-steps label { display: block; }
+  .wo-actions {
+    display:flex;
+    gap:.5rem;
+    justify-content:flex-end;
+  }
+
+  /* Modal container gets a sensible max height */
+  #wo-modal.modal.card {
+    max-width: 900px !important;
+    max-height: 85vh;
+    overflow: auto;
+  }
+</style>
+
+<!-- Modal -->
+<div id="wo-modal-backdrop" class="modal-backdrop" hidden></div>
+<div id="wo-modal" class="modal card" hidden>
+  <div class="toolbar" style="margin-bottom:.75rem;">
+    <h3 id="wo-modal-title" style="margin:0">New Template</h3>
+    <div style="margin-left:auto;display:flex;gap:.5rem;">
+      <button class="btn" id="wo-modal-cancel">Cancel</button>
+      <button class="btn-cta" id="wo-modal-save">Save</button>
+    </div>
+  </div>
+
+  <form class="wo-form" onsubmit="return false;">
+    <!-- Basics -->
+    <section class="wo-section" aria-labelledby="wo-basics-h">
+      <h4 id="wo-basics-h" style="margin:0 0 6px;">Basics</h4>
+      <div class="wo-grid-2">
+        <label>Work Order Name
+          <input id="wo-name" class="input" />
+        </label>
+        <label>Qty
+          <input id="wo-qty" class="input" type="number" min="0" value="1" />
+        </label>
+      </div>
+      <div class="wo-grid-3" style="margin-top:8px;">
+        <label>Standard Time Each
+          <div class="wo-time-row">
+            <input id="wo-std-h" class="input" type="number" min="0" value="0" placeholder="HH" />
+            <span class="wo-time-sep">:</span>
+            <input id="wo-std-m" class="input" type="number" min="0" max="59" value="00" placeholder="MM" />
+            <span class="wo-time-sep">:</span>
+            <input id="wo-std-s" class="input" type="number" min="0" max="59" value="00" placeholder="SS" />
+          </div>
+        </label>
+        </div>
+        <div class="wo-grid-3" style="margin-top:8px;">
+        <label>Total Standard Time
+          <div class="wo-time-row">
+            <input id="wo-total-h" class="input" type="number" min="0" value="0" placeholder="HH" />
+            <span class="wo-time-sep">:</span>
+            <input id="wo-total-m" class="input" type="number" min="0" max="59" value="00" placeholder="MM" />
+            <span class="wo-time-sep">:</span>
+            <input id="wo-total-s" class="input" type="number" min="0" max="59" value="00" placeholder="SS" />
+          </div>
+        </label>
+        <label>Auto-calc Total
+          <span style="display:flex;align-items:center;gap:.5rem;">
+            <input id="wo-total-auto" type="checkbox" checked />
+            <small class="muted">Total = Qty × Standard Each</small>
+          </span>
+        </label>
+      </div>
+      <div style="margin-top:8px;">
+        <label>Procedures Needed
+          <input id="wo-proc" class="input" placeholder="e.g., 1.B.2 or text" />
+        </label>
+      </div>
+    </section>
+
+    <!-- Steps (1 column with scroll) -->
+    <section class="wo-section" aria-labelledby="wo-steps-h">
+      <h4 id="wo-steps-h" style="margin:0 0 6px;">Steps (up to 10)</h4>
+      <div id="wo-steps-wrap" class="wo-steps">
+        <label>Step 1  <input id="wo-step1"  class="input" /></label>
+        <label>Step 2  <input id="wo-step2"  class="input" /></label>
+        <label>Step 3  <input id="wo-step3"  class="input" /></label>
+        <label>Step 4  <input id="wo-step4"  class="input" /></label>
+        <label>Step 5  <input id="wo-step5"  class="input" /></label>
+        <label>Step 6  <input id="wo-step6"  class="input" /></label>
+        <label>Step 7  <input id="wo-step7"  class="input" /></label>
+        <label>Step 8  <input id="wo-step8"  class="input" /></label>
+        <label>Step 9  <input id="wo-step9"  class="input" /></label>
+        <label>Step 10 <input id="wo-step10" class="input" /></label>
+      </div>
+    </section>
+
+    <!-- Footer note -->
+    <p class="muted" id="wo-modal-tip" style="margin:0;"></p>
+  </form>
+</div>

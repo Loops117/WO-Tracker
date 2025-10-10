@@ -1,0 +1,23 @@
+/* assets/styles.css */
+:root { --bg:#f7f7fb; --ink:#111; --muted:#666; --card:#fff; --line:#e6e6ee; }
+* { box-sizing: border-box; }
+body { font-family: system-ui, sans-serif; margin: 0; background: var(--bg); color: var(--ink); }
+.container { max-width: 960px; margin: 0 auto; padding: 2rem; }
+header { margin-bottom: 1rem; }
+.logo { font-weight: 700; letter-spacing: .5px; }
+.card { background: var(--card); border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.06); padding: 1rem; }
+.row { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+.row.between { justify-content: space-between; }
+.tabs { display: flex; gap: .5rem; margin-bottom: 1rem; }
+.tab-btn { border: 1px solid var(--line); background: #fff; padding: .5rem .75rem; border-radius: 10px; cursor: pointer; }
+.tab-btn.active { background: #111; color: #fff; }
+.tab { display: none; }
+.tab.active { display: block; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .5rem; }
+.user-btn { display: block; width: 100%; border: 1px solid var(--line); background: #fff; border-radius: 12px; padding: .75rem; cursor: pointer; text-align: center; }
+.user-btn:hover { background: #fafafa; }
+input { padding: .5rem .75rem; border: 1px solid var(--line); border-radius: 10px; }
+button { padding: .5rem .75rem; border: none; border-radius: 10px; background: #111; color: #fff; cursor: pointer; }
+.msg { margin-top: .5rem; color: #0a0; }
+a { color: #0a58ca; text-decoration: none; }
+a:hover { text-decoration: underline; }

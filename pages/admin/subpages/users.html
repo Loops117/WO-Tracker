@@ -1,0 +1,78 @@
+<section class="card" style="margin:12px; padding:12px;">
+  <h3 style="margin:0 0 8px;">Users</h3>
+
+  <div class="toolbar" style="display:flex;gap:.5rem;align-items:center;margin-bottom:.5rem;">
+    <button class="btn" id="users-new">+ Add User</button>
+    <input class="input" id="users-search" placeholder="Search users..." />
+  </div>
+
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th style="width:180px">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="users-tbody">
+        <tr><td colspan="4" class="muted">Loading…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<style>
+  #users-modal.modal.card { max-width: 760px; max-height: 85vh; overflow: auto; }
+  .u-form { display:grid; gap:12px; }
+  .u-grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+  .u-section {
+    border: 1px solid var(--border, #dde1e6);
+    border-radius: 10px;
+    padding: 12px;
+    background: var(--card, #fff);
+  }
+  .u-actions { display:flex; gap:.5rem; justify-content:flex-end; }
+  .muted-sm { color:#6b7280; font-size:.9em; }
+</style>
+
+<!-- Modal -->
+<div id="users-modal-backdrop" class="modal-backdrop" hidden></div>
+<div id="users-modal" class="modal card" hidden>
+  <div class="toolbar" style="margin-bottom:.75rem;">
+    <h3 id="users-modal-title" style="margin:0">Add User</h3>
+    <div style="margin-left:auto;display:flex;gap:.5rem;">
+      <button class="btn" id="users-cancel">Cancel</button>
+      <button class="btn-cta" id="users-save">Save</button>
+    </div>
+  </div>
+
+  <form class="u-form" onsubmit="return false;">
+    <section class="u-section" aria-labelledby="u-basic-h">
+      <h4 id="u-basic-h" style="margin:0 0 6px;">User Info</h4>
+      <div class="u-grid-2">
+        <label>First Name
+          <input id="u-first" class="input" autocomplete="off" />
+        </label>
+        <label>Last Name
+          <input id="u-last" class="input" autocomplete="off" />
+        </label>
+      </div>
+
+      <div class="u-grid-2" style="margin-top:8px;">
+        <label style="display:flex;align-items:center;gap:.5rem;">
+          <input id="u-role-admin" type="checkbox" />
+          <span>Admin (unchecked = Worker)</span>
+        </label>
+
+        <label id="u-email-wrap" style="display:none;">Email
+          <input id="u-email" class="input" inputmode="email" placeholder="admin@company.com" />
+          <div class="muted-sm">Shown only for Admins; Workers get an auto email.</div>
+        </label>
+      </div>
+
+      <div id="u-auto-email" class="muted-sm" style="margin-top:6px;display:none;"></div>
+    </section>
+  </form>
+</div>

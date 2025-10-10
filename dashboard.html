@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Dashboard</h1>
+    <p>Welcome. This is a placeholder. We'll wire the real dashboard next.</p>
+    <pre id="me"></pre>
+  </main>
+  <script type="module">
+    const me = JSON.parse(localStorage.getItem('worker_session')||'null');
+    document.getElementById('me').textContent = JSON.stringify(me, null, 2);
+  </script>
+</body>
+</html>
